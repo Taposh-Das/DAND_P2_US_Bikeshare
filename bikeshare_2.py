@@ -63,8 +63,43 @@ def load_data(city, month, day):
     Returns:
         df - Pandas DataFrame containing city data filtered by month and day
     """
+    fileName=""
+    if city == 'Chicago':
+        fileName ='chicago.csv'
+    elif city == 'New York':
+        fileName = 'new_york_city.csv'
+    elif city == 'Washington':
+        fileName = 'washington.csv'
 
+    df = pd.read_csv(fileName)#my comment fileName is name of csv file based on user city input
 
+    # my comment convert the Start Time column to datetime
+    df['Start Time'] = pd.to_datetime(df['Start Time'])
+    # my comment extract month from the Start Time column to create a month column
+    df['month'] = df['Start Time'].dt.month
+    # my comment extract day of week from the Start Time column to create a day_of_week column
+    df['day_of_week'] = df['Start Time'].dt.weekday_name
+    # my comment extract hour from the Start Time column to create a hour column
+    df['hour'] = df['Start Time'].dt.hour
+
+    # filter by month if applicable
+    if month != 'all':
+        # use the index of the months list to get the corresponding int
+        months = ['january', 'february', 'march', 'april', 'may', 'june']
+        month = months.index(month) + 1
+        #print(month)
+
+        # filter by month to create the new dataframe
+        df = df[df.month==month]
+
+    # filter by day of week if applicable
+    if day != 'all':
+        # filter by day of week to create the new dataframe
+        df = df[df.day_of_week == day.title()]
+    #df = df.loc[(df['column_name'] == some_value) & df['other_column'].isin(some_values)]
+    #df = df.loc[(df['month'] == month) & (df['day_of_week'] == day)]
+    #testing if filter works by printing df
+    #print(df)
     return df
 
 

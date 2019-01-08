@@ -198,13 +198,26 @@ def user_stats(df):
     start_time = time.time()
 
     # Display counts of user types
-
+    print("Different user types and their corresponding number:\n",df['User Type'].value_counts())
+    print("\nThis took %s seconds." % (time.time() - start_time))
+    print('-'*40)
 
     # Display counts of gender
-
+    if "Gender" in df.columns:
+        print("Different genders and their corresponding number:\n", df['Gender'].value_counts())
+        print("\nThis took %s seconds." % (time.time() - start_time))
+        print('-'*40)
+    else:
+        print("No gender data to share.")
 
     # Display earliest, most recent, and most common year of birth
+    if "Birth Year" in df.columns:
+        print("Earliest birth year: ",df["Birth Year"].min())
+        print("Most recent birth year: ",df["Birth Year"].max())
+        print("Most common birth year: ",df["Birth Year"].mode()[0])
 
+    else:
+        print("No birth data to share.")
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)

@@ -227,11 +227,26 @@ def main():
     while True:
         city, month, day = get_filters()
         df = load_data(city, month, day)
-
+        df_row_length=df.shape[0]#gives number of rows of dataframe df
+        count=0
+        see_5raw_data="no"
+        #print(df[0:3])
         time_stats(df)
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
+        while True:
+            see_5raw_data=input("Would you like to see next five rows of your filtered data? Type yes/no.\n").lower()
+            if count+5 > df_row_length:
+                print("There are no more rows left to show.")
+                break
+            if see_5raw_data == "yes":
+                print(df[count:count+5])#prints next 5 rows from df
+                count+=5
+            elif see_5raw_data == "no":
+                break
+            elif see_5raw_data == "yes" and see_5raw_data == "no":
+                print('\nYou have to type exactly "yes" or "no".\n')
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
